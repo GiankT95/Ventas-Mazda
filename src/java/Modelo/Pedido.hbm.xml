@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-nov-2017 23:15:31 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Pedido" table="Pedido" catalog="VentasMazda" optimistic-lock="version">
+        <id name="idPedido" type="java.lang.Integer">
+            <column name="idPedido" />
+            <generator class="identity" />
+        </id>
+        <property name="monto" type="double">
+            <column name="monto" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <set name="documentos" table="Documento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Pedido_idPedido" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Documento" />
+        </set>
+        <set name="carroComprases" table="CarroCompras" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Pedido_idPedido" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.CarroCompras" />
+        </set>
+    </class>
+</hibernate-mapping>

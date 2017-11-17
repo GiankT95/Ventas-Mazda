@@ -13,8 +13,8 @@ public class Catalogo  implements java.io.Serializable {
 
      private Integer idCatalogo;
      private String nombre;
-     private Set productos = new HashSet(0);
-     private Set usuarios = new HashSet(0);
+     private Set productos = new HashSet();
+     private Set usuarios = new HashSet();
 
     public Catalogo() {
     }

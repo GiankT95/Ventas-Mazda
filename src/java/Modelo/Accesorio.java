@@ -15,7 +15,7 @@ public class Accesorio  implements java.io.Serializable {
      private String nombre;
      private int precio;
      private Integer stock;
-     private Set productos = new HashSet(0);
+     private Set productos = new HashSet();
 
     public Accesorio() {
     }

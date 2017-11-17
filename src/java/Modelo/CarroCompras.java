@@ -14,7 +14,7 @@ public class CarroCompras  implements java.io.Serializable {
      private Integer idCarroCompras;
      private Pedido pedido;
      private Usuario usuario;
-     private Set productos = new HashSet(0);
+     private Set productos = new HashSet();
 
     public CarroCompras() {
     }

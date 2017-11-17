@@ -19,9 +19,9 @@
 
     <body>
         
-        <h1><font face="impact" color="blue">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
+        <h1><font face="arial black" color="blue">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
         <h2> <font face="arial black">Lista de usuarios registrados</font></h2>
-        <table border="1">
+        <table border="3">
             <tr>
             <td>Id</td>
             <td>Rol</td>
@@ -29,6 +29,7 @@
             <td>Nombre</td>
             <td>Apellido</td>
             <td>Clave</td>
+            
             </tr>
             <%
             List<Usuario> lista = (List<Usuario>) request.getSession().getAttribute("lista");
@@ -40,12 +41,13 @@
                <td><%= u.getNombre() %></td>
                <td><%= u.getApellido() %></td>
                <td><%= u.getClave() %></td>
+               
                </tr>
             <%}%>
         </table>
 
         <h2> <font face="arial black">Catalogo Mazda</font></h2>
-        <table border="1">
+        <table border="3">
             <tr>
             <td>Id</td>
             <td>Marca</td>
@@ -53,7 +55,7 @@
             <td>Año</td>
             <td>Precio</td>
             <td>Stock</td>
-            
+            <td>Vehiculo</td>
             </tr>
             <%
             List<Vehiculo> vehiculos = (List<Vehiculo>) request.getSession().getAttribute("vehiculos");
@@ -68,6 +70,31 @@
                <td><%= v.getAnio() %></td>
                <td><%= df.format(v.getPrecio()) %></td>
                <td><%= v.getStock() %></td>
+               
+               <% if (v.getModelo().equalsIgnoreCase("6")){%>
+                   
+                <td><img src="mazda6.png" width="300px" height="160px"/></td>
+                        <%}%>
+                <% if (v.getModelo().equalsIgnoreCase("cx-5")){%>
+
+                <td><img src="cx-5.png" width="300px" height="160px"/></td>
+                        <%}%>
+                
+                <% if (v.getModelo().equalsIgnoreCase("3")){%>
+
+                <td><img src="mazda3.jpg" width="300px" height="160px"/></td>
+                        <%}%>
+                
+                <% if (v.getModelo().equalsIgnoreCase("cx-9")){%>
+
+                <td><img src="cx-9.png" width="300px" height="160px"/></td>
+                        <%}%>
+                
+                <% if (v.getModelo().equalsIgnoreCase("2")){%>
+
+                <td><img src="mazda2.png" width="300px" height="160px"/></td>
+                        <%}%>
+                
                </tr>
             <%}
             %>

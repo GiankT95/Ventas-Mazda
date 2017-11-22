@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,19 +13,20 @@ public class Accesorio  implements java.io.Serializable {
 
      private Integer idAccesorio;
      private String nombre;
-     private int precio;
-     private Integer stock;
-     private Set productos = new HashSet();
+     private double precio;
+     private int stock;
+     private Set productos = new HashSet(0);
 
     public Accesorio() {
     }
 
 	
-    public Accesorio(String nombre, int precio) {
+    public Accesorio(String nombre, double precio, int stock) {
         this.nombre = nombre;
         this.precio = precio;
+        this.stock = stock;
     }
-    public Accesorio(String nombre, int precio, Integer stock, Set productos) {
+    public Accesorio(String nombre, double precio, int stock, Set productos) {
        this.nombre = nombre;
        this.precio = precio;
        this.stock = stock;
@@ -46,18 +47,18 @@ public class Accesorio  implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public int getPrecio() {
+    public double getPrecio() {
         return this.precio;
     }
     
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
-    public Integer getStock() {
+    public int getStock() {
         return this.stock;
     }
     
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
     public Set getProductos() {

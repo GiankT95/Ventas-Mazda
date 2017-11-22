@@ -5,11 +5,13 @@
  */
 package Controlador;
 
+import Modelo.ServicioAdmin;
 import Modelo.ServicioLogin;
 import Modelo.ServicioRegistro;
 import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +42,9 @@ public class ServletAdmin extends HttpServlet {
         boolean resultado = ServicioRegistro.instance().existeUsuario(usuario);
         
         if(resultado){
-            ServicioRegistro.instance().eliminarUsuario(usuario);
+            ServicioAdmin.instance().eliminarUsuario(usuario);
+            //List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
+            
             response.sendRedirect("admin.jsp");
         }
         

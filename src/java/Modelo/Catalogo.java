@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,8 +13,8 @@ public class Catalogo  implements java.io.Serializable {
 
      private Integer idCatalogo;
      private String nombre;
-     private Set productos = new HashSet();
-     private Set usuarios = new HashSet();
+     private Set productos = new HashSet(0);
+     private Set usuarios = new HashSet(0);
 
     public Catalogo() {
     }

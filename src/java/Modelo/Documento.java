@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 
@@ -12,13 +12,15 @@ public class Documento  implements java.io.Serializable {
      private Integer idDocumento;
      private Pedido pedido;
      private TipoDocumento tipoDocumento;
+     private String formato;
 
     public Documento() {
     }
 
-    public Documento(Pedido pedido, TipoDocumento tipoDocumento) {
+    public Documento(Pedido pedido, TipoDocumento tipoDocumento, String formato) {
        this.pedido = pedido;
        this.tipoDocumento = tipoDocumento;
+       this.formato = formato;
     }
    
     public Integer getIdDocumento() {
@@ -41,6 +43,13 @@ public class Documento  implements java.io.Serializable {
     
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+    public String getFormato() {
+        return this.formato;
+    }
+    
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 
 

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-nov-2017 23:15:31 by Hibernate Tools 4.3.1 -->
+<!-- Generated 20-nov-2017 16:59:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Modelo.Vehiculo" table="Vehiculo" catalog="VentasMazda" optimistic-lock="version">
+    <class name="Modelo.Vehiculo" table="Vehiculo" catalog="Mazda" optimistic-lock="version">
         <id name="idVehiculo" type="java.lang.Integer">
             <column name="idVehiculo" />
             <generator class="identity" />
@@ -14,8 +14,8 @@
         <property name="modelo" type="string">
             <column name="modelo" length="45" not-null="true" />
         </property>
-        <property name="anio" type="int">
-            <column name="anio" not-null="true" />
+        <property name="anio" type="string">
+            <column name="anio" length="45" not-null="true" />
         </property>
         <property name="precio" type="double">
             <column name="precio" precision="22" scale="0" not-null="true" />

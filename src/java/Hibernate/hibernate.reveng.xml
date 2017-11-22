@@ -40,17 +40,17 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="VentasMazda"/>
-  <table-filter match-name="CarroCompras_has_Producto"/>
-  <table-filter match-name="Producto"/>
-  <table-filter match-name="Catalogo"/>
-  <table-filter match-name="CarroCompras"/>
-  <table-filter match-name="Usuario"/>
-  <table-filter match-name="Accesorio"/>
-  <table-filter match-name="Documento"/>
-  <table-filter match-name="Pedido"/>
+  <schema-selection match-catalog="Mazda"/>
   <table-filter match-name="RolUsuario"/>
-  <table-filter match-name="Vehiculo"/>
-  <table-filter match-name="TipoDocumento"/>
+  <table-filter match-name="Pedido"/>
+  <table-filter match-name="Catalogo"/>
   <table-filter match-name="Catalogo_has_Producto"/>
+  <table-filter match-name="Usuario"/>
+  <table-filter match-name="CarroCompras_has_Producto"/>
+  <table-filter match-name="TipoDocumento"/>
+  <table-filter match-name="Documento"/>
+  <table-filter match-name="CarroCompras"/>
+  <table-filter match-name="Accesorio"/>
+  <table-filter match-name="Producto"/>
+  <table-filter match-name="Vehiculo"/>
 </hibernate-reverse-engineering>

@@ -43,7 +43,7 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://ec2-54-233-233-230.sa-east-1.compute.amazonaws.com:3306/VentasMazda?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://ec2-54-233-233-230.sa-east-1.compute.amazonaws.com:3306/Mazda?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">1234</property>
     <property name="hibernate.current_session_context_class">thread</property>

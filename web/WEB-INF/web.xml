@@ -12,6 +12,14 @@
         <servlet-name>ServletAdmin</servlet-name>
         <servlet-class>Controlador.ServletAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletCarrito</servlet-name>
+        <servlet-class>Controlador.ServletCarrito</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPedido</servlet-name>
+        <servlet-class>Controlador.ServletPedido</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>ServletAdmin</servlet-name>
         <url-pattern>/ServletAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletCarrito</servlet-name>
+        <url-pattern>/ServletCarrito</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPedido</servlet-name>
+        <url-pattern>/ServletPedido</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,6 +4,7 @@
     Author     : Asus
 --%>
 
+<%@page import="Modelo.Producto"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="Modelo.Vehiculo"%>
@@ -19,16 +20,16 @@
 
     <body>
         
-        <h1><font face="arial black" color="blue">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
+        <h1><font face="arial black" color="">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
         <h2> <font face="arial black">Lista de usuarios registrados</font></h2>
-        <table border="3">
+        <table border="1" cellspacing="0">
             <tr>
-            <td>Id</td>
-            <td>Rol</td>
-            <td>Usuario</td>
-            <td>Nombre</td>
-            <td>Apellido</td>
-            <td>Clave</td>
+            <th>Id</th>
+            <th>Rol</th>
+            <th>Usuario</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Clave</th>
             
             </tr>
             <%
@@ -45,60 +46,6 @@
                </tr>
             <%}%>
         </table>
-
-        <h2> <font face="arial black">Catalogo Mazda</font></h2>
-        <table border="3">
-            <tr>
-            <td>Id</td>
-            <td>Marca</td>
-            <td>Modelo</td>
-            <td>Año</td>
-            <td>Precio</td>
-            <td>Stock</td>
-            <td>Vehiculo</td>
-            </tr>
-            <%
-            List<Vehiculo> vehiculos = (List<Vehiculo>) request.getSession().getAttribute("vehiculos");
-            DecimalFormat df = new DecimalFormat("$###,###.###");
-            
-            
-            for (Vehiculo v : vehiculos){%>
-               <tr>
-               <td><%= v.getIdVehiculo() %></td>
-               <td><%= v.getMarca() %></td>
-               <td><%= v.getModelo() %></td>
-               <td><%= v.getAnio() %></td>
-               <td><%= df.format(v.getPrecio()) %></td>
-               <td><%= v.getStock() %></td>
-               
-               <% if (v.getModelo().equalsIgnoreCase("6")){%>
-                   
-                <td><img src="mazda6.png" width="300px" height="160px"/></td>
-                        <%}%>
-                <% if (v.getModelo().equalsIgnoreCase("cx-5")){%>
-
-                <td><img src="cx-5.png" width="300px" height="160px"/></td>
-                        <%}%>
-                
-                <% if (v.getModelo().equalsIgnoreCase("3")){%>
-
-                <td><img src="mazda3.jpg" width="300px" height="160px"/></td>
-                        <%}%>
-                
-                <% if (v.getModelo().equalsIgnoreCase("cx-9")){%>
-
-                <td><img src="cx-9.png" width="300px" height="160px"/></td>
-                        <%}%>
-                
-                <% if (v.getModelo().equalsIgnoreCase("2")){%>
-
-                <td><img src="mazda2.png" width="300px" height="160px"/></td>
-                        <%}%>
-                
-               </tr>
-            <%}
-            %>
-        </table>
         
         <form method="POST" action="ServletAdmin">
             <br>
@@ -107,6 +54,95 @@
             <input type="Submit" name="eliminar" value="Eliminar">
             
         </form>
+
+        <h2> <font face="arial black">Catalogo Mazda</font></h2>
+        
+        <div style="overflow: scroll; height: 225px; width:45%; overflow:auto">
+        <table border="1" CELLSPACING="0" cellpadding="8">
+            
+            <tr> <th>Producto</th>
+            <th colspan="2" >Detalle</th>
+            </tr>
+            
+            <%
+            List<Producto> productos = (List<Producto>) request.getSession().getAttribute("catalogo");
+            DecimalFormat df = new DecimalFormat("$###,###.###");
+            
+            
+            for (Producto p : productos){%>
+            
+            <% if (p.getVehiculo() != null){%>
+            
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("6")){%>
+                <tr> <td rowspan="6" ><img src="mazda6.png" width="300px" height="160px"/></td>
+            <%}%>
+            
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("cx-5")){%>
+                <tr> <td rowspan="6" ><img src="cx-5.png" width="300px" height="160px"/></td>
+            <%}%>
+                    
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("2")){%>
+                <tr> <td rowspan="6" ><img src="mazda2.png" width="300px" height="160px"/></td>
+            <%}%>
+                    
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("3")){%>
+                <tr><td rowspan="6" ><img src="mazda3.jpg" width="300px" height="160px"/></td>
+            <%}%>
+                    
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("cx-9")){%>
+                <tr > <td rowspan="6" ><img src="cx-9.png" width="300px" height="160px"/></td>
+            <%}%>
+            
+            <th>Id</th>
+            <td><%= p.getIdProducto() %></td>
+            </tr>
+
+            <tr> <th>Marca</th>
+            <td><%= p.getVehiculo().getMarca() %></td>
+            </tr>
+
+            <tr><th>Modelo</th>
+            <td><%= p.getVehiculo().getModelo() %></td>
+            </tr>
+
+            <tr><th>Año</th>
+            <td><%= p.getVehiculo().getAnio() %></td>
+            </tr>
+
+            <tr> <th>Precio</th>
+            <td><%= df.format(p.getVehiculo().getPrecio()) %></td>
+            </tr>
+
+            <tr> <th>Stock</th>
+            <td><%= p.getVehiculo().getStock() %></td>
+            </tr>
+            
+            <%}%>
+            
+               
+               <% if (p.getAccesorio() != null){%>
+                    <tr><td rowspan="4"><img src="logo mazda.png" width="300px" height="160px"/></td>
+                    <th>Id</th>
+                    <td><%= p.getIdProducto() %></td>
+                    </tr>
+
+                    <tr><th>Accesorio</th>
+                    <td><%= p.getAccesorio().getNombre() %></td>
+                    </tr>
+
+                    <tr> <th>Precio</th>
+                    <td><%= df.format(p.getAccesorio().getPrecio()) %></td>
+                    </tr>
+
+                    <tr> <th>Stock</th>
+                    <td><%= p.getAccesorio().getStock() %></td>
+                    </tr>
+               <%}%>
+               
+            <%}
+            %>
+        </table>
+        </div>
         
         <br><br>
         <a href="inicioSesion.jsp">Cerrar Sesion</a>

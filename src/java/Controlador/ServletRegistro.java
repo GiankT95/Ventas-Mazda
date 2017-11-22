@@ -5,11 +5,13 @@
  */
 package Controlador;
 
-import Modelo.RolUsuario;
+import Modelo.ServicioLogin;
+import Modelo.*;
 import Modelo.Usuario;
 import Modelo.Catalogo;
 import Modelo.ServicioRegistro;
 import java.io.IOException;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -66,14 +68,17 @@ public class ServletRegistro extends HttpServlet {
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String clave = request.getParameter("clave");
-        RolUsuario rolCliente = ServicioRegistro.instance().solicitarRolUsuario("cliente");
-        Catalogo catalogo = ServicioRegistro.instance().solicitarCatalogo("Catalogo Mazda");
+        RolUsuario rolCliente = ServicioLogin.instance().solicitarRolUsuario("cliente");
+        Catalogo catalogo = ServicioLogin.instance().solicitarCatalogo("Mazda");
         
-        Usuario usuario = new Usuario(catalogo, rolCliente, nombreUsuario, clave, nombre, apellido);
+        Usuario usuario = new Usuario(catalogo, rolCliente, nombreUsuario, nombre, apellido, clave);
 
-        boolean resultado = ServicioRegistro.instance().registrarUsuario(usuario);
+        CarroCompras carro = new CarroCompras(usuario, "activo");
+        
+        boolean autenticacion = ServicioRegistro.instance().registrarUsuario(usuario);
+        boolean nuevoCarro = ServicioRegistro.instance().nuevoCarrito(carro);
 
-        if (resultado) {
+        if (autenticacion && nuevoCarro) {
             response.sendRedirect("inicioSesion.jsp");
         } else{
             response.sendRedirect("registroUsuario.jsp");

@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,7 +14,7 @@ public class Vehiculo  implements java.io.Serializable {
      private Integer idVehiculo;
      private String marca;
      private String modelo;
-     private int anio;
+     private String anio;
      private double precio;
      private int stock;
      private Set productos = new HashSet(0);
@@ -23,14 +23,14 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
 	
-    public Vehiculo(String marca, String modelo, int anio, double precio, int stock) {
+    public Vehiculo(String marca, String modelo, String anio, double precio, int stock) {
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.precio = precio;
         this.stock = stock;
     }
-    public Vehiculo(String marca, String modelo, int anio, double precio, int stock, Set productos) {
+    public Vehiculo(String marca, String modelo, String anio, double precio, int stock, Set productos) {
        this.marca = marca;
        this.modelo = modelo;
        this.anio = anio;
@@ -60,11 +60,11 @@ public class Vehiculo  implements java.io.Serializable {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
-    public int getAnio() {
+    public String getAnio() {
         return this.anio;
     }
     
-    public void setAnio(int anio) {
+    public void setAnio(String anio) {
         this.anio = anio;
     }
     public double getPrecio() {

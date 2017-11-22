@@ -6,8 +6,11 @@
 package Modelo;
 
 import Hibernate.HibernateUtil;
+import Hibernate.HibernateUtil;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -64,16 +67,17 @@ public class ServicioLogin {
         return usuario;
     }
 
-    public List<Usuario> listaUsuarios() {
+    public Catalogo solicitarCatalogo(String nombre) {
 
-        List<Usuario> listaUsuarios = new ArrayList<>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
         Transaction tr = null;
+        Catalogo catalogo = null;
 
         try {
-            tr = session.getTransaction();
+            tr = sesion.getTransaction();
             tr.begin();
-            listaUsuarios = session.createQuery("from Usuario").list();
+            Query query = sesion.createQuery("from Catalogo where nombre='" + nombre + "'");
+            catalogo = (Catalogo) query.uniqueResult();
             tr.commit();
         } catch (Exception e) {
             if (tr != null) {
@@ -81,21 +85,22 @@ public class ServicioLogin {
             }
             e.printStackTrace();
         } finally {
-            session.close();
+            sesion.close();
         }
-        return listaUsuarios;
+        return catalogo;
     }
 
-    public List<Vehiculo> listaVehiculos() {
+    public RolUsuario solicitarRolUsuario(String tipo) {
 
-        List<Vehiculo> listaVehiculos = new ArrayList<>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
         Transaction tr = null;
+        RolUsuario rol = null;
 
         try {
-            tr = session.getTransaction();
+            tr = sesion.getTransaction();
             tr.begin();
-            listaVehiculos = session.createQuery("from Vehiculo").list();
+            Query query = sesion.createQuery("from RolUsuario where tipo='" + tipo + "'");
+            rol = (RolUsuario) query.uniqueResult();
             tr.commit();
         } catch (Exception e) {
             if (tr != null) {
@@ -103,12 +108,57 @@ public class ServicioLogin {
             }
             e.printStackTrace();
         } finally {
-            session.close();
+            sesion.close();
         }
-        return listaVehiculos;
+        return rol;
+    }
+    
+    public Producto solicitarProducto(int idProducto) {
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tr = null;
+        Producto producto = null;
+
+        try {
+            tr = sesion.getTransaction();
+            tr.begin();
+            Query query = sesion.createQuery("from Producto where idProducto='" + idProducto + "'");
+            producto = (Producto) query.uniqueResult();
+            tr.commit();
+        } catch (Exception e) {
+            if (tr != null) {
+                tr.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            sesion.close();
+        }
+        return producto;
     }
 
-    public List<Producto> listarProductos() {
+    public List<CarroCompras> listaCarritos(Usuario usuario) {
+        
+        List<CarroCompras> listaCarritos = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        //Transaction tr = null;
+
+        try {
+            //tr = session.getTransaction();
+            //tr.begin();
+            listaCarritos = session.createQuery("from CarroCompras where Usuario_idUsuario='"+usuario.getIdUsuario()+"'").list();
+            //tr.commit();
+        } catch (Exception e) {
+            /*if (tr != null) {
+                tr.rollback();
+            }*/
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return listaCarritos;
+    }
+    
+    public List<Producto> listarCatalogo() {
 
         List<Producto> listaProductos = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -130,4 +180,6 @@ public class ServicioLogin {
         return listaProductos;
     }
 
+    
+    
 }

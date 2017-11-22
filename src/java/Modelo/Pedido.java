@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,24 +13,28 @@ public class Pedido  implements java.io.Serializable {
 
 
      private Integer idPedido;
+     private CarroCompras carroCompras;
      private double monto;
      private Date fecha;
+     private String medioPago;
      private Set documentos = new HashSet(0);
-     private Set carroComprases = new HashSet(0);
 
     public Pedido() {
     }
 
 	
-    public Pedido(double monto, Date fecha) {
+    public Pedido(CarroCompras carroCompras, double monto, Date fecha, String medioPago) {
+        this.carroCompras = carroCompras;
         this.monto = monto;
         this.fecha = fecha;
+        this.medioPago = medioPago;
     }
-    public Pedido(double monto, Date fecha, Set documentos, Set carroComprases) {
+    public Pedido(CarroCompras carroCompras, double monto, Date fecha, String medioPago, Set documentos) {
+       this.carroCompras = carroCompras;
        this.monto = monto;
        this.fecha = fecha;
+       this.medioPago = medioPago;
        this.documentos = documentos;
-       this.carroComprases = carroComprases;
     }
    
     public Integer getIdPedido() {
@@ -39,6 +43,13 @@ public class Pedido  implements java.io.Serializable {
     
     public void setIdPedido(Integer idPedido) {
         this.idPedido = idPedido;
+    }
+    public CarroCompras getCarroCompras() {
+        return this.carroCompras;
+    }
+    
+    public void setCarroCompras(CarroCompras carroCompras) {
+        this.carroCompras = carroCompras;
     }
     public double getMonto() {
         return this.monto;
@@ -54,19 +65,19 @@ public class Pedido  implements java.io.Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+    public String getMedioPago() {
+        return this.medioPago;
+    }
+    
+    public void setMedioPago(String medioPago) {
+        this.medioPago = medioPago;
+    }
     public Set getDocumentos() {
         return this.documentos;
     }
     
     public void setDocumentos(Set documentos) {
         this.documentos = documentos;
-    }
-    public Set getCarroComprases() {
-        return this.carroComprases;
-    }
-    
-    public void setCarroComprases(Set carroComprases) {
-        this.carroComprases = carroComprases;
     }
 
 

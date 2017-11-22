@@ -5,14 +5,13 @@
  */
 package Controlador;
 
-import Modelo.CarroCompras;
-import Modelo.Producto;
-import Modelo.ServicioAdmin;
-import Modelo.Usuario;
-import Modelo.Vehiculo;
 import Modelo.ServicioLogin;
+import Modelo.*;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Asus
  */
-public class ServletLogin extends HttpServlet {
+public class ServletPedido extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,43 +35,48 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String nombre = request.getParameter("nombreInicio");
-        String clave = request.getParameter("claveInicio");
-
-        Usuario usuario = ServicioLogin.instance().buscarUsuarioPorNombre(nombre);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("Usuario");
         
-        boolean resultado = ServicioLogin.instance().autenticacion(nombre, clave);
+        List<CarroCompras> carritos = ServicioLogin.instance().listaCarritos(usuario);
         
-        List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
-        List<CarroCompras> listacarritos = ServicioLogin.instance().listaCarritos(usuario);
-        List<Producto> catalogo = ServicioLogin.instance().listarCatalogo();
+        String medioPago = request.getParameter("medioPago");
         
-        if (resultado) {
-            
-            if (usuario.getRolUsuario().getTipo().equalsIgnoreCase("admin")) {
+        Date fecha = new Date();
+        
+        
+        for (CarroCompras carrito : carritos) {
+            if (carrito.getEstado().equalsIgnoreCase("activo")) {
                 
-                request.getSession().setAttribute("nombreUsuario", usuario.getNombre());
-                request.getSession().setAttribute("Usuario", usuario);
-                request.getSession().setAttribute("catalogo", catalogo);
-                request.getSession().setAttribute("lista", lista);
-                response.sendRedirect("admin.jsp");
-                request.getSession().setAttribute("mensaje", "Sesion cerrada.");       
+                Set<Producto> productos = carrito.getProductos();
                 
-            }else{
-                request.getSession().setAttribute("nombreUsuario", usuario.getNombre());
-                request.getSession().setAttribute("listaCarritos", listacarritos);
-                request.getSession().setAttribute("Usuario", usuario);
-                request.getSession().setAttribute("catalogo", catalogo);
-                response.sendRedirect("paginaInicio.jsp");
-                request.getSession().setAttribute("mensaje", "Sesion cerrada.");
+                double total;
+                double total1 = 0;
+                double total2 = 0;
+                
+                for (Producto p : productos){
+                    
+                    if(p.getAccesorio() != null){
+                        total1 = total1+ p.getAccesorio().getPrecio();
+                    }
+                    
+                    if(p.getVehiculo() != null){
+                        total2 = total2 + p.getVehiculo().getPrecio();
+                    }
+                    
+                }
+                
+                total = total1 + total2;
+                
+                Pedido pedido = new Pedido(carrito, total, fecha, medioPago);
+                
+                ServicioRegistro.instance().nuevoPedido(pedido);
+                
+                
+                
             }
-            
-            
-        } else {
-            request.getSession().setAttribute("mensaje", "Nombre y/o clave incorrecta");
-            response.sendRedirect("inicioSesion.jsp");
-            
         }
+        
+        response.sendRedirect("pedidos.jsp");
         
     }
 

@@ -4,6 +4,12 @@
     Author     : Asus
 --%>
 
+<%@page import="Modelo.ServicioLogin"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Set"%>
+<%@page import="Modelo.CarroCompras"%>
+<%@page import="Modelo.Producto"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="Modelo.Vehiculo"%>
 <%@page import="java.util.List"%>
@@ -18,63 +24,110 @@
 
     <body>
         
+    <center>
         <h1>Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </h1>
         
         <h2> <font face="arial black">Catalogo Mazda</font></h2>
-        <table border="3">
-            <tr>
-            <td>Id</td>
-            <td>Marca</td>
-            <td>Modelo</td>
-            <td>Año</td>
-            <td>Precio</td>
-            <td>Stock</td>
-            <td>Vehiculo</td>
+        <div style="overflow: scroll; height: 225px; width:45%; overflow:auto">
+        <table border="1" CELLSPACING="0" cellpadding="8">
+            
+            <tr> <th>Producto</th>
+            <th colspan="2" >Detalle</th>
             </tr>
+            
             <%
-            List<Vehiculo> vehiculos = (List<Vehiculo>) request.getSession().getAttribute("vehiculos");
+            List<Producto> productos = (List<Producto>) request.getSession().getAttribute("catalogo");
             DecimalFormat df = new DecimalFormat("$###,###.###");
             
             
-            for (Vehiculo v : vehiculos){%>
-               <tr>
-               <td><%= v.getIdVehiculo() %></td>
-               <td><%= v.getMarca() %></td>
-               <td><%= v.getModelo() %></td>
-               <td><%= v.getAnio() %></td>
-               <td><%= df.format(v.getPrecio()) %></td>
-               <td><%= v.getStock() %></td>
+            for (Producto p : productos){%>
+            
+            <% if (p.getVehiculo() != null){%>
+            
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("6")){%>
+                <tr> <td rowspan="6" ><img src="mazda6.png" width="300px" height="160px"/></td>
+            <%}%>
+            
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("cx-5")){%>
+                <tr> <td rowspan="6" ><img src="cx-5.png" width="300px" height="160px"/></td>
+            <%}%>
+                    
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("2")){%>
+                <tr> <td rowspan="6" ><img src="mazda2.png" width="300px" height="160px"/></td>
+            <%}%>
+                    
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("3")){%>
+                <tr><td rowspan="6" ><img src="mazda3.jpg" width="300px" height="160px"/></td>
+            <%}%>
+                    
+            <% if (p.getVehiculo().getModelo().equalsIgnoreCase("cx-9")){%>
+                <tr > <td rowspan="6" ><img src="cx-9.png" width="300px" height="160px"/></td>
+            <%}%>
+            
+            <th>Id</th>
+            <td><%= p.getIdProducto() %></td>
+            </tr>
+
+            <tr> <th>Marca</th>
+            <td><%= p.getVehiculo().getMarca() %></td>
+            </tr>
+
+            <tr><th>Modelo</th>
+            <td><%= p.getVehiculo().getModelo() %></td>
+            </tr>
+
+            <tr><th>Año</th>
+            <td><%= p.getVehiculo().getAnio() %></td>
+            </tr>
+
+            <tr> <th>Precio</th>
+            <td><%= df.format(p.getVehiculo().getPrecio()) %></td>
+            </tr>
+
+            <tr> <th>Stock</th>
+            <td><%= p.getVehiculo().getStock() %></td>
+            </tr>
+            
+            <%}%>
+            
                
-               <% if (v.getModelo().equalsIgnoreCase("6")){%>
-                   
-                <td><img src="mazda6.png" width="300px" height="160px"/></td>
-                        <%}%>
-                <% if (v.getModelo().equalsIgnoreCase("cx-5")){%>
+               <% if (p.getAccesorio() != null){%>
+                    <tr><td rowspan="4"><img src="logo mazda.png" width="300px" height="160px"/></td>
+                    <th>Id</th>
+                    <td><%= p.getIdProducto() %></td>
+                    </tr>
 
-                <td><img src="cx-5.png" width="300px" height="160px"/></td>
-                        <%}%>
-                
-                <% if (v.getModelo().equalsIgnoreCase("3")){%>
+                    <tr><th>Accesorio</th>
+                    <td><%= p.getAccesorio().getNombre() %></td>
+                    </tr>
 
-                <td><img src="mazda3.jpg" width="300px" height="160px"/></td>
-                        <%}%>
-                
-                <% if (v.getModelo().equalsIgnoreCase("cx-9")){%>
+                    <tr> <th>Precio</th>
+                    <td><%= df.format(p.getAccesorio().getPrecio()) %></td>
+                    </tr>
 
-                <td><img src="cx-9.png" width="300px" height="160px"/></td>
-                        <%}%>
-                
-                <% if (v.getModelo().equalsIgnoreCase("2")){%>
-
-                <td><img src="mazda2.png" width="300px" height="160px"/></td>
-                        <%}%>
-                
-               </tr>
+                    <tr> <th>Stock</th>
+                    <td><%= p.getAccesorio().getStock() %></td>
+                    </tr>
+               <%}%>
+               
             <%}
             %>
         </table>
+        </div>
         
-        <a href="inicioSesion.jsp">Cerrar Sesion</a>
+        <form method="POST" action="ServletCarrito">
+            
+            <h3><font face="arial black">Ingrese el Id del producto</font></h3>
+            <input type="text" name="producto" id="producto" style="font-family: Arial; font-size: 12pt;width:70px;height:20px;text-align:left">
+            <input type="Submit" name="agregarProducto" value="Agregar al carrito">
+            
+        </form>
+       
+        <br>
+        <a href="pedidos.jsp"><h4><font face="arial">Ver Carro de Compras</font></h4></a>
+        
+    </center>
+        <a href="inicioSesion.jsp"><h4><font face="arial">Cerrar Sesion</font></h4></a>
         
     </body>
 </html>

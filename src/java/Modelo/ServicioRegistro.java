@@ -6,6 +6,7 @@
 package Modelo;
 
 import Hibernate.HibernateUtil;
+import Hibernate.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -87,76 +88,6 @@ public class ServicioRegistro {
         return reg;
     }
 
-    public Catalogo solicitarCatalogo(String nombre) {
-
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        Transaction tr = null;
-        Catalogo catalogo = null;
-
-        try {
-            tr = sesion.getTransaction();
-            tr.begin();
-            Query query = sesion.createQuery("from Catalogo where nombre='" + nombre + "'");
-            catalogo = (Catalogo) query.uniqueResult();
-            tr.commit();
-        } catch (Exception e) {
-            if (tr != null) {
-                tr.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            sesion.close();
-        }
-        return catalogo;
-    }
-
-    public RolUsuario solicitarRolUsuario(String tipo) {
-
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        Transaction tr = null;
-        RolUsuario rol = null;
-
-        try {
-            tr = sesion.getTransaction();
-            tr.begin();
-            Query query = sesion.createQuery("from RolUsuario where tipo='" + tipo + "'");
-            rol = (RolUsuario) query.uniqueResult();
-            tr.commit();
-        } catch (Exception e) {
-            if (tr != null) {
-                tr.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            sesion.close();
-        }
-        return rol;
-    }
-
-    public void eliminarUsuario(Usuario usuario) {
-
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-
-        Transaction tr = null;
-        try {
-            if (!usuario.getNombreUsuario().isEmpty() && !usuario.getClave().isEmpty()) {
-                tr = sesion.getTransaction();
-                tr.begin();
-                sesion.delete(usuario);
-                tr.commit();
-            }
-
-        } catch (Exception ex) {
-            if (tr != null) {
-                tr.rollback();
-            }
-            ex.printStackTrace();
-        } finally {
-            sesion.close();
-        }
-
-    }
-
     public boolean existeUsuario(Usuario usuario) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -207,4 +138,58 @@ public class ServicioRegistro {
         return resultado;
     }
 
+    public boolean nuevoCarrito(CarroCompras carrito){
+        
+        boolean reg = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tr = null;
+        
+        try {
+            if (carrito != null) {
+                tr = sesion.getTransaction();
+                tr.begin();
+                sesion.saveOrUpdate(carrito);
+                tr.commit();
+                reg = true;
+            }
+
+        } catch (Exception e) {
+            if (tr != null) {
+                tr.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            sesion.close();
+        }
+        return reg;
+    }
+    
+    public boolean nuevoPedido(Pedido pedido){
+        
+        boolean reg = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tr = null;
+        
+        try {
+            if (pedido != null) {
+                tr = sesion.getTransaction();
+                tr.begin();
+                sesion.saveOrUpdate(pedido);
+                tr.commit();
+                reg = true;
+            }
+
+        } catch (Exception e) {
+            if (tr != null) {
+                tr.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            sesion.close();
+        }
+        return reg;
+    }
+    
 }

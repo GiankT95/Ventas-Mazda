@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,33 +15,37 @@ public class Usuario  implements java.io.Serializable {
      private Catalogo catalogo;
      private RolUsuario rolUsuario;
      private String nombreUsuario;
-     private String clave;
      private String nombre;
      private String apellido;
-     private Set carroComprases = new HashSet(0);
+     private String clave;
+     private Set carroComprases = new HashSet();
 
     public Usuario() {
     }
 
 	
-    public Usuario(Catalogo catalogo, RolUsuario rolUsuario, String nombreUsuario, String clave, String nombre, String apellido) {
+    public Usuario(Catalogo catalogo, RolUsuario rolUsuario, String nombreUsuario, String nombre, String apellido, String clave) {
         this.catalogo = catalogo;
         this.rolUsuario = rolUsuario;
         this.nombreUsuario = nombreUsuario;
-        this.clave = clave;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.clave = clave;
     }
-    public Usuario(Catalogo catalogo, RolUsuario rolUsuario, String nombreUsuario, String clave, String nombre, String apellido, Set carroComprases) {
+    public Usuario(Catalogo catalogo, RolUsuario rolUsuario, String nombreUsuario, String nombre, String apellido, String clave, Set carroComprases) {
        this.catalogo = catalogo;
        this.rolUsuario = rolUsuario;
        this.nombreUsuario = nombreUsuario;
-       this.clave = clave;
        this.nombre = nombre;
        this.apellido = apellido;
+       this.clave = clave;
        this.carroComprases = carroComprases;
     }
    
+    public void agregarCarrito (CarroCompras carroCompras){
+        this.carroComprases.add(carroCompras);
+    }
+    
     public Integer getIdUsuario() {
         return this.idUsuario;
     }
@@ -70,13 +74,6 @@ public class Usuario  implements java.io.Serializable {
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
-    public String getClave() {
-        return this.clave;
-    }
-    
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
     public String getNombre() {
         return this.nombre;
     }
@@ -90,6 +87,13 @@ public class Usuario  implements java.io.Serializable {
     
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+    public String getClave() {
+        return this.clave;
+    }
+    
+    public void setClave(String clave) {
+        this.clave = clave;
     }
     public Set getCarroComprases() {
         return this.carroComprases;

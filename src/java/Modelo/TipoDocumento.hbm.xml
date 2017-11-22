@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-nov-2017 23:15:31 by Hibernate Tools 4.3.1 -->
+<!-- Generated 20-nov-2017 16:59:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Modelo.TipoDocumento" table="TipoDocumento" catalog="VentasMazda" optimistic-lock="version">
+    <class name="Modelo.TipoDocumento" table="TipoDocumento" catalog="Mazda" optimistic-lock="version">
         <id name="idTipoDocumento" type="java.lang.Integer">
             <column name="idTipoDocumento" />
             <generator class="identity" />
@@ -13,7 +13,7 @@
         </property>
         <set name="documentos" table="Documento" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="TipoDocumento_idTipoDocumento" not-null="true" />
+                <column name="TipoDocumento_idTipoDocumento" not-null="true" unique="true" />
             </key>
             <one-to-many class="Modelo.Documento" />
         </set>

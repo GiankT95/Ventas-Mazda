@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,24 +12,30 @@ public class CarroCompras  implements java.io.Serializable {
 
 
      private Integer idCarroCompras;
-     private Pedido pedido;
      private Usuario usuario;
+     private String estado;
+     private Set pedidos = new HashSet();
      private Set productos = new HashSet();
 
     public CarroCompras() {
     }
 
 	
-    public CarroCompras(Pedido pedido, Usuario usuario) {
-        this.pedido = pedido;
+    public CarroCompras(Usuario usuario, String estado) {
         this.usuario = usuario;
+        this.estado = estado;
     }
-    public CarroCompras(Pedido pedido, Usuario usuario, Set productos) {
-       this.pedido = pedido;
+    public CarroCompras(Usuario usuario, String estado, Set pedidos, Set productos) {
        this.usuario = usuario;
+       this.estado = estado;
+       this.pedidos = pedidos;
        this.productos = productos;
     }
    
+    public void agregarProducto(Producto producto) {
+        this.productos.add(producto);
+    }
+    
     public Integer getIdCarroCompras() {
         return this.idCarroCompras;
     }
@@ -37,19 +43,26 @@ public class CarroCompras  implements java.io.Serializable {
     public void setIdCarroCompras(Integer idCarroCompras) {
         this.idCarroCompras = idCarroCompras;
     }
-    public Pedido getPedido() {
-        return this.pedido;
-    }
-    
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
     public Usuario getUsuario() {
         return this.usuario;
     }
     
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    public String getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    public Set getPedidos() {
+        return this.pedidos;
+    }
+    
+    public void setPedidos(Set pedidos) {
+        this.pedidos = pedidos;
     }
     public Set getProductos() {
         return this.productos;

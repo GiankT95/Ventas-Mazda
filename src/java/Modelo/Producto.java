@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 16-nov-2017 23:15:29 by Hibernate Tools 4.3.1
+// Generated 20-nov-2017 16:59:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,8 +14,8 @@ public class Producto  implements java.io.Serializable {
      private Integer idProducto;
      private Accesorio accesorio;
      private Vehiculo vehiculo;
-     private Set catalogos = new HashSet(0);
-     private Set carroComprases = new HashSet(0);
+     private Set catalogos = new HashSet();
+     private Set carroComprases = new HashSet();
 
     public Producto() {
     }

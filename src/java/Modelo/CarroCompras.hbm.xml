@@ -1,19 +1,25 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-nov-2017 23:15:31 by Hibernate Tools 4.3.1 -->
+<!-- Generated 20-nov-2017 16:59:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Modelo.CarroCompras" table="CarroCompras" catalog="VentasMazda" optimistic-lock="version">
+    <class name="Modelo.CarroCompras" table="CarroCompras" catalog="Mazda" optimistic-lock="version">
         <id name="idCarroCompras" type="java.lang.Integer">
             <column name="idCarroCompras" />
             <generator class="identity" />
         </id>
-        <many-to-one name="pedido" class="Modelo.Pedido" fetch="select">
-            <column name="Pedido_idPedido" not-null="true" />
-        </many-to-one>
         <many-to-one name="usuario" class="Modelo.Usuario" fetch="select">
             <column name="Usuario_idUsuario" not-null="true" />
         </many-to-one>
+        <property name="estado" type="string">
+            <column name="estado" length="45" not-null="true" />
+        </property>
+        <set name="pedidos" table="Pedido" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CarroCompras_idCarroCompras" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Pedido" />
+        </set>
         <set name="productos" table="CarroCompras_has_Producto" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="CarroCompras_idCarroCompras" not-null="true" />

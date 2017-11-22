@@ -5,14 +5,12 @@
  */
 package Controlador;
 
-import Modelo.CarroCompras;
-import Modelo.Producto;
-import Modelo.ServicioAdmin;
-import Modelo.Usuario;
-import Modelo.Vehiculo;
-import Modelo.ServicioLogin;
+
+import Modelo.*;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Asus
  */
-public class ServletLogin extends HttpServlet {
+public class ServletCarrito extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,45 +33,47 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String nombre = request.getParameter("nombreInicio");
-        String clave = request.getParameter("claveInicio");
 
-        Usuario usuario = ServicioLogin.instance().buscarUsuarioPorNombre(nombre);
+        int idProducto = Integer.parseInt(request.getParameter("producto"));
+        Producto producto = ServicioLogin.instance().solicitarProducto(idProducto);
         
-        boolean resultado = ServicioLogin.instance().autenticacion(nombre, clave);
         
-        List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
-        List<CarroCompras> listacarritos = ServicioLogin.instance().listaCarritos(usuario);
-        List<Producto> catalogo = ServicioLogin.instance().listarCatalogo();
         
-        if (resultado) {
-            
-            if (usuario.getRolUsuario().getTipo().equalsIgnoreCase("admin")) {
+        List<CarroCompras> lista = (List<CarroCompras>) request.getSession().getAttribute("listaCarritos");
+
+        for (CarroCompras carrito : lista) {
+            if (carrito.getEstado().equalsIgnoreCase("activo")) {
                 
-                request.getSession().setAttribute("nombreUsuario", usuario.getNombre());
-                request.getSession().setAttribute("Usuario", usuario);
-                request.getSession().setAttribute("catalogo", catalogo);
-                request.getSession().setAttribute("lista", lista);
-                response.sendRedirect("admin.jsp");
-                request.getSession().setAttribute("mensaje", "Sesion cerrada.");       
+                carrito.agregarProducto(producto);
+                ServicioRegistro.instance().nuevoCarrito(carrito);
                 
-            }else{
-                request.getSession().setAttribute("nombreUsuario", usuario.getNombre());
-                request.getSession().setAttribute("listaCarritos", listacarritos);
-                request.getSession().setAttribute("Usuario", usuario);
-                request.getSession().setAttribute("catalogo", catalogo);
-                response.sendRedirect("paginaInicio.jsp");
-                request.getSession().setAttribute("mensaje", "Sesion cerrada.");
+                Set<Producto> productos = carrito.getProductos();
+                
+                double total;
+                double total1 = 0;
+                double total2 = 0;
+                
+                for (Producto p : productos){
+                    
+                    if(p.getAccesorio() != null){
+                        total1 = total1+ p.getAccesorio().getPrecio();
+                    }
+                    
+                    if(p.getVehiculo() != null){
+                        total2 = total2 + p.getVehiculo().getPrecio();
+                    }
+                    
+                }
+                
+                total = total1 + total2;              
+                
+                request.getSession().setAttribute("total", total);
+                
             }
-            
-            
-        } else {
-            request.getSession().setAttribute("mensaje", "Nombre y/o clave incorrecta");
-            response.sendRedirect("inicioSesion.jsp");
-            
         }
         
+        request.getSession().setAttribute("lista", lista);
+        response.sendRedirect("paginaInicio.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

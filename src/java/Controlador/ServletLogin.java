@@ -40,16 +40,15 @@ public class ServletLogin extends HttpServlet {
         String clave = request.getParameter("claveInicio");
 
         Usuario usuario = ServicioLogin.instance().buscarUsuarioPorNombre(nombre);
-        
-        boolean resultado = ServicioLogin.instance().autenticacion(nombre, clave);
-        
-        List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
-        List<CarroCompras> listacarritos = ServicioLogin.instance().listaCarritos(usuario);
         List<Producto> catalogo = ServicioLogin.instance().listarCatalogo();
         
+        boolean resultado = ServicioLogin.instance().autenticacion(nombre, clave);
+
         if (resultado) {
             
             if (usuario.getRolUsuario().getTipo().equalsIgnoreCase("admin")) {
+                
+                List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
                 
                 request.getSession().setAttribute("nombreUsuario", usuario.getNombre());
                 request.getSession().setAttribute("Usuario", usuario);
@@ -59,6 +58,10 @@ public class ServletLogin extends HttpServlet {
                 request.getSession().setAttribute("mensaje", "Sesion cerrada.");       
                 
             }else{
+                
+                
+                List<CarroCompras> listacarritos = ServicioLogin.instance().listaCarritos(usuario);
+                
                 request.getSession().setAttribute("nombreUsuario", usuario.getNombre());
                 request.getSession().setAttribute("listaCarritos", listacarritos);
                 request.getSession().setAttribute("Usuario", usuario);

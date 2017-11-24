@@ -138,7 +138,7 @@ public class ServicioRegistro {
         return resultado;
     }
 
-    public boolean nuevoCarrito(CarroCompras carrito){
+    public boolean guardarCarrito(CarroCompras carrito){
         
         boolean reg = false;
 
@@ -158,6 +158,30 @@ public class ServicioRegistro {
             if (tr != null) {
                 tr.rollback();
             }
+            e.printStackTrace();
+        } finally {
+            sesion.close();
+        }
+        return reg;
+    }
+    
+    public boolean nuevoCarrito(Usuario usuario){
+        
+        boolean reg = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        
+        try {
+            if (usuario != null) {
+
+                CarroCompras carroNuevo = new CarroCompras(usuario, "activo");
+                
+                sesion.saveOrUpdate(carroNuevo);
+                
+                reg = true;
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             sesion.close();

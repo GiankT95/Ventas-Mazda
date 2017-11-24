@@ -34,22 +34,35 @@ public class ServletAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        if (request.getParameter("admin").equalsIgnoreCase("eliminar")) {
+
+            String eliminar = request.getParameter("elimUsuario");
+
+            Usuario usuario = ServicioLogin.instance().buscarUsuarioPorNombre(eliminar);
+
+            boolean resultado = ServicioRegistro.instance().existeUsuario(usuario);
+
+            if (resultado) {
+                ServicioAdmin.instance().eliminarUsuario(usuario);
+                //List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
+
+                response.sendRedirect("admin.jsp");
+            }
+
+        }
         
-        String eliminar = request.getParameter("elimUsuario");
-        
-        Usuario usuario = ServicioLogin.instance().buscarUsuarioPorNombre(eliminar);
-        
-        boolean resultado = ServicioRegistro.instance().existeUsuario(usuario);
-        
-        if(resultado){
-            ServicioAdmin.instance().eliminarUsuario(usuario);
-            //List<Usuario> lista = ServicioAdmin.instance().listaUsuarios();
+        if (request.getParameter("admin").equalsIgnoreCase("pedidosusuario")){
+            
+            String nombre = request.getParameter("nombrep");
+            
+            Usuario usuario = ServicioLogin.instance().buscarUsuarioPorNombre(nombre);
+            
+            request.getSession().setAttribute("usuariop", usuario);
             
             response.sendRedirect("admin.jsp");
         }
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

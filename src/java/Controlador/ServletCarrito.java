@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-
 import Modelo.*;
 import java.io.IOException;
 import java.util.HashSet;
@@ -34,46 +33,80 @@ public class ServletCarrito extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idProducto = Integer.parseInt(request.getParameter("producto"));
-        Producto producto = ServicioLogin.instance().solicitarProducto(idProducto);
-        
-        
-        
-        List<CarroCompras> lista = (List<CarroCompras>) request.getSession().getAttribute("listaCarritos");
+        double total;
+        double total1 = 0;
+        double total2 = 0;
 
-        for (CarroCompras carrito : lista) {
-            if (carrito.getEstado().equalsIgnoreCase("activo")) {
-                
-                carrito.agregarProducto(producto);
-                ServicioRegistro.instance().nuevoCarrito(carrito);
-                
-                Set<Producto> productos = carrito.getProductos();
-                
-                double total;
-                double total1 = 0;
-                double total2 = 0;
-                
-                for (Producto p : productos){
-                    
-                    if(p.getAccesorio() != null){
-                        total1 = total1+ p.getAccesorio().getPrecio();
+        //Usuario usuario = (Usuario) request.getSession().getAttribute("Usuario");
+        if (request.getParameter("carrito").equals("agregarProducto")) {
+
+            List<CarroCompras> lista = (List<CarroCompras>) request.getSession().getAttribute("listaCarritos");
+
+            int idProducto = Integer.parseInt(request.getParameter("producto"));
+            Producto producto = ServicioLogin.instance().solicitarProducto(idProducto);
+
+            for (CarroCompras carrito : lista) {
+                if (carrito.getEstado().equalsIgnoreCase("activo")) {
+
+                    carrito.agregarProducto(producto);
+                    ServicioRegistro.instance().guardarCarrito(carrito);
+
+                    Set<Producto> productos = carrito.getProductos();
+
+                    for (Producto p : productos) {
+
+                        if (p.getAccesorio() != null) {
+                            total1 = total1 + p.getAccesorio().getPrecio();
+                        }
+
+                        if (p.getVehiculo() != null) {
+                            total2 = total2 + p.getVehiculo().getPrecio();
+                        }
+
                     }
-                    
-                    if(p.getVehiculo() != null){
-                        total2 = total2 + p.getVehiculo().getPrecio();
-                    }
-                    
+
                 }
-                
-                total = total1 + total2;              
-                
-                request.getSession().setAttribute("total", total);
-                
             }
+
+            total = total1 + total2;
+            request.getSession().setAttribute("total", total);
+
+            request.getSession().setAttribute("lista", lista);
+            response.sendRedirect("paginaInicio.jsp");
+
         }
-        
-        request.getSession().setAttribute("lista", lista);
-        response.sendRedirect("paginaInicio.jsp");
+
+        if (request.getParameter("carrito").equals("verCarrito")) {
+
+            List<CarroCompras> lista = (List<CarroCompras>) request.getSession().getAttribute("listaCarritos");
+
+            for (CarroCompras carrito : lista) {
+                if (carrito.getEstado().equalsIgnoreCase("activo")) {
+
+                    Set<Producto> productos = carrito.getProductos();
+
+                    for (Producto p : productos) {
+
+                        if (p.getAccesorio() != null) {
+                            total1 = total1 + p.getAccesorio().getPrecio();
+                        }
+
+                        if (p.getVehiculo() != null) {
+                            total2 = total2 + p.getVehiculo().getPrecio();
+                        }
+
+                    }
+
+                }
+            }
+
+            total = total1 + total2;
+            request.getSession().setAttribute("total", total);
+
+            request.getSession().setAttribute("lista", lista);
+            response.sendRedirect("carrito.jsp");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -76,7 +76,7 @@ public class ServletRegistro extends HttpServlet {
         CarroCompras carro = new CarroCompras(usuario, "activo");
         
         boolean autenticacion = ServicioRegistro.instance().registrarUsuario(usuario);
-        boolean nuevoCarro = ServicioRegistro.instance().nuevoCarrito(carro);
+        boolean nuevoCarro = ServicioRegistro.instance().guardarCarrito(carro);
 
         if (autenticacion && nuevoCarro) {
             response.sendRedirect("inicioSesion.jsp");

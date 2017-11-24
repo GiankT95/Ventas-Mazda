@@ -1,109 +1,79 @@
 <%-- 
-    Document   : CarroCompras
-    Created on : 21-nov-2017, 19:57:06
+    Document   : documentacion
+    Created on : 22-nov-2017, 20:33:58
     Author     : Asus
 --%>
 
-<%@page import="java.util.Set"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.List"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.List"%>
 <%@page import="Modelo.*"%>
-<%@page import="Modelo.CarroCompras"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Carrito de Compras</title>
+        <title>Pedidos</title>
     </head>
     <body>
-        
-    <center>
-        
-        <table border="1" cellpadding="8" cellspacing="0" > 
-        
-        <tr>
-            <th colspan="5" align="center">CARRITO DE COMPRAS</th>
-        </tr>
 
-        <tr>
-            <th>Id Producto</th>
-            <th>Tipo de Producto</th>
-            <th>Nombre</th>
-            <th>Fecha</th>
-            <th>Precio</th>
-        </tr>
+        <table border="1" cellpadding="8" cellspacing="0" >
 
-        <%
-            
-        List<CarroCompras> carritos = (List<CarroCompras>) request.getSession().getAttribute("lista");
-        double total = new Double(request.getSession().getAttribute("total").toString());
-        DecimalFormat d = new DecimalFormat("$###,###.###");
-        
-        String fecha = "dd/MM/yyyy  HH:mm:ss";
-        SimpleDateFormat f = new SimpleDateFormat(fecha);
-        Date date = new Date();
-        
-        
-        for (CarroCompras c : carritos){
-        
-        if (c.getEstado().equalsIgnoreCase("activo")) {
-        
-        Set<Producto> pCarrito = c.getProductos(); 
-        
-            for (Producto p : pCarrito){%>
-            
-            <tr>
-                <td><%= p.getIdProducto() %></td>
-                
-                <% if (p.getVehiculo() != null){%>
-                
-                
-                
-                    <td>Vehiculo</td>
-                    <td><%= p.getVehiculo().getMarca() +" "+ p.getVehiculo().getModelo() %></td>
-                    <td><%= f.format(date) %></td>
-                    <td><%= d.format(p.getVehiculo().getPrecio()) %></td>
-                <%}%>
-                
-                <% if (p.getAccesorio() != null){%>
-                
-                
-                
-                    <td>Accesorio</td>
-                    <td><%= p.getAccesorio().getNombre() %></td>
-                    <td><%= f.format(date) %></td>
-                    <td><%= d.format(p.getAccesorio().getPrecio()) %></td>
-                <%}%>
-                
+            <tr><th align="center" colspan="5" >Pedidos de <%= request.getSession().getAttribute("nombreUsuario")%></th>
             </tr>
 
-            <% 
-                //total = total1 + total2; 
+            <tr align="center">
+
+                <th>Pedido N°</th>
+                <th>Fecha</th>
+                <th>Medio de Pago</th>
+                <th>Monto</th>
+                <th>Documentación</th>
+
+            </tr>
+
+            <%
+                Usuario usuario = (Usuario) request.getSession().getAttribute("Usuario");
+                double total = 0;
+
+                DecimalFormat d = new DecimalFormat("$###,###.###");
+
+                List<CarroCompras> listaCarritos = ServicioLogin.instance().listaCarritos(usuario);
+
+                if (listaCarritos != null && usuario != null) {
+
+                    int i = 1;
+
+                    for (CarroCompras carrito : listaCarritos) {
+
+                        Set<Pedido> listaPedidos = carrito.getPedidos();
+
+                        for (Pedido pedido : listaPedidos) {
+
+                        total = total + pedido.getMonto();%>
+
+            <tr align="center">
+
+                <td><%= i%></td>
+                <td><%= pedido.getFecha()%></td>
+                <td><%= pedido.getMedioPago()%></td>
+                <td><a href="documentos.jsp">Descargar</a></td>
+                <td><%= d.format(pedido.getMonto())%></td>
+
+            </tr>
+
+            <% i++; %>  
+
+            <%}
+                    }
+                }
             %>
-               
-            <%}%>
-            
-        <tr> 
-            <th colspan="4" align="right">Total</th>
-            <td><%= d.format(total) %></td>   
-        </tr>
-        <%}%>
-        <%}%>
-        
+
+            <tr><th align="right" colspan="4" >Total Pedidos</td>
+                <td align="center"><%= d.format(total)%></td>
+            </tr>
+
         </table>
-        
-        <br>
-        <form method="POST" action="ServletPedido">
-           
-            <input type="text" name="medioPago" id="medioPago" style="font-family: Arial; font-size: 12pt;width:170px;height:20px;text-align:left">
-            <input type="Submit" name="hacerPedido" value="Hacer Pedido">
-            
-        </form>
-        
-    </center>
+
     </body>
 </html>

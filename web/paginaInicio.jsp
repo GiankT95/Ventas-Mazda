@@ -120,11 +120,25 @@
             <h3><font face="arial black">Ingrese el Id del producto</font></h3>
             <input type="text" name="producto" id="producto" style="font-family: Arial; font-size: 12pt;width:70px;height:20px;text-align:left">
             <input type="Submit" name="agregarProducto" value="Agregar al carrito">
-            
+            <input type="hidden" name="carrito" value="agregarProducto"/>
         </form>
        
         <br>
-        <a href="pedidos.jsp"><h4><font face="arial">Ver Carro de Compras</font></h4></a>
+        <form method="POST" action="ServletCarrito">
+            
+            <input type="Submit" name="verCarrito" value="Ver Carrito">
+            <input type="hidden" name="carrito" value="verCarrito"/>
+            
+        </form>
+        
+        <br>
+        
+        <form method="POST" action="ServletPedido">
+            
+            <input type="Submit" name="verPedidos" value="Ver Pedidos">
+            <input type="hidden" name="pedido" value="verPedidos"/>
+            
+        </form>
         
     </center>
         <a href="inicioSesion.jsp"><h4><font face="arial">Cerrar Sesion</font></h4></a>

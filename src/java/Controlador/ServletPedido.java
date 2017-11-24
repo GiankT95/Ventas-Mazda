@@ -8,7 +8,6 @@ package Controlador;
 import Modelo.ServicioLogin;
 import Modelo.*;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -34,50 +33,61 @@ public class ServletPedido extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Usuario usuario = (Usuario) request.getSession().getAttribute("Usuario");
-        
-        List<CarroCompras> carritos = ServicioLogin.instance().listaCarritos(usuario);
-        
-        String medioPago = request.getParameter("medioPago");
-        
-        Date fecha = new Date();
-        
-        
-        for (CarroCompras carrito : carritos) {
-            if (carrito.getEstado().equalsIgnoreCase("activo")) {
-                
-                Set<Producto> productos = carrito.getProductos();
-                
-                double total;
-                double total1 = 0;
-                double total2 = 0;
-                
-                for (Producto p : productos){
-                    
-                    if(p.getAccesorio() != null){
-                        total1 = total1+ p.getAccesorio().getPrecio();
+
+        if (request.getParameter("pedido").equals("hacerPedido")) {
+
+            Usuario usuario = (Usuario) request.getSession().getAttribute("Usuario");
+
+            List<CarroCompras> carritos = ServicioLogin.instance().listaCarritos(usuario);
+
+            String medioPago = request.getParameter("medioDePago");
+
+            Date fecha = new Date();
+
+            double total;
+            double total1 = 0;
+            double total2 = 0;
+
+            for (CarroCompras carrito : carritos) {
+                if (carrito.getEstado().equalsIgnoreCase("activo")) {
+
+                    Set<Producto> productos = carrito.getProductos();
+
+                    for (Producto p : productos) {
+
+                        if (p.getAccesorio() != null) {
+                            total1 = total1 + p.getAccesorio().getPrecio();
+                        }
+
+                        if (p.getVehiculo() != null) {
+                            total2 = total2 + p.getVehiculo().getPrecio();
+                        }
+
                     }
-                    
-                    if(p.getVehiculo() != null){
-                        total2 = total2 + p.getVehiculo().getPrecio();
-                    }
-                    
+
+                    total = total1 + total2;
+
+                    Pedido pedido = new Pedido(carrito, total, fecha, medioPago);
+
+                    ServicioRegistro.instance().nuevoPedido(pedido);
+
+                    carrito.setEstado("inactivo");
+
+                    ServicioRegistro.instance().guardarCarrito(carrito);
+
                 }
-                
-                total = total1 + total2;
-                
-                Pedido pedido = new Pedido(carrito, total, fecha, medioPago);
-                
-                ServicioRegistro.instance().nuevoPedido(pedido);
-                
-                
-                
             }
+
+            ServicioRegistro.instance().nuevoCarrito(usuario);
+
+            response.sendRedirect("carrito.jsp");
         }
         
-        response.sendRedirect("pedidos.jsp");
-        
+        if(request.getParameter("pedido").equals("verPedidos")){
+            
+            response.sendRedirect("pedidos.jsp");
+            
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

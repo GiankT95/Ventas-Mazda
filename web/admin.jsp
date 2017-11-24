@@ -4,6 +4,11 @@
     Author     : Asus
 --%>
 
+<%@page import="Modelo.Pedido"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.Set"%>
+<%@page import="Modelo.ServicioLogin"%>
+<%@page import="Modelo.CarroCompras"%>
 <%@page import="Modelo.Producto"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.NumberFormat"%>
@@ -19,7 +24,8 @@
     </head>
 
     <body>
-        
+      
+    <center>
         <h1><font face="arial black" color="">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
         <h2> <font face="arial black">Lista de usuarios registrados</font></h2>
         <table border="1" cellspacing="0">
@@ -49,12 +55,89 @@
         
         <form method="POST" action="ServletAdmin">
             <br>
-            <h3><font face="arial black">Ingrese un nombre de usuario:</font></h3>
             <input type="text" name="elimUsuario" id="claveInicio" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left">
             <input type="Submit" name="eliminar" value="Eliminar">
-            
+            <input type="hidden" name="admin" value="eliminar">
         </form>
 
+        <br>
+        
+        
+        
+        <table border="1" cellpadding="8" cellspacing="0" >
+  
+        <tr><th align="center" colspan="5" >Pedidos</th>
+        </tr>
+
+        <tr align="center">
+
+            <th>Pedido N°</th>
+            <th>Fecha</th>
+            <th>Medio de Pago</th>
+            <th>Documentacion</th>
+            <th>Monto</th>
+
+        </tr>
+
+        <%
+            
+            double total = 0;
+            
+            DecimalFormat d = new DecimalFormat("$###,###.###");
+            
+             Usuario usuario = (Usuario) request.getSession().getAttribute("usuariop");
+            
+            List<CarroCompras> listaCarritos = ServicioLogin.instance().listaCarritos(usuario);  
+            
+            if (listaCarritos != null && usuario != null) {
+                
+                int i=1;
+                
+                for (CarroCompras carrito : listaCarritos) {
+                    
+                    Set<Pedido> listaPedidos = carrito.getPedidos();
+                    
+                    
+                    
+                    for (Pedido pedido : listaPedidos) {
+                        
+                    total = total + pedido.getMonto(); %>
+
+                        <tr align="center">
+                        
+                            <td><%= i %></td>
+                            <td><%= pedido.getFecha() %></td>
+                            <td><%= pedido.getMedioPago() %></td>
+                            <td><a href="documentos.jsp">Descargar</a></td>
+                            <td><%= d.format(pedido.getMonto()) %></td>
+                        
+                        </tr>
+
+                        <% i++; %>  
+                        
+                    <%}
+                }
+            }
+        %>
+
+        <tr><th align="right" colspan="4" >Total Pedidos</td>
+            <td align="center"><%= d.format(total) %></td>
+        </tr>
+
+        </table>
+        
+        <br>
+        
+        <form method="POST" action="ServletAdmin">
+            
+            <input type="text" name="nombrep" id="nombrep" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left">
+            <input type="Submit" name="pedidosUsuario" value="Ver Pedidos">
+            <input type="hidden" name="admin" value="pedidosUsuario"/>
+            
+        </form>
+        
+        <br>
+        
         <h2> <font face="arial black">Catalogo Mazda</font></h2>
         
         <div style="overflow: scroll; height: 225px; width:45%; overflow:auto">
@@ -146,6 +229,8 @@
         
         <br><br>
         <a href="inicioSesion.jsp">Cerrar Sesion</a>
+    
+    </center>
         
     </body>
 </html>

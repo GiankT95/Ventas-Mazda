@@ -13,7 +13,7 @@ public class TipoDocumento  implements java.io.Serializable {
 
      private Integer idTipoDocumento;
      private String nombre;
-     private Set documentos = new HashSet(0);
+     private Set documentos = new HashSet();
 
     public TipoDocumento() {
     }

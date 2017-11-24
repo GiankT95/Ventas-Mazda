@@ -23,12 +23,14 @@
         <title><%= request.getSession().getAttribute("nombreUsuario") %></title>
     </head>
 
-    <body>
+    <body style="background-color:#34495E;">
       
     <center>
-        <h1><font face="arial black" color="">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
-        <h2> <font face="arial black">Lista de usuarios registrados</font></h2>
-        <table border="1" cellspacing="0">
+        
+        <img src="http://www.carlogos.org/logo/Mazda-logo-1997-1920x1080.png" width="300px" height="160px"/>
+        
+        <h1><font face="Agency FB" color="#BADFF5">Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </font></h1><br>
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;"><table style="background-color:#BADFF5;" border="1" cellspacing="0">
             <tr>
             <th>Id</th>
             <th>Rol</th>
@@ -53,6 +55,8 @@
             <%}%>
         </table>
         
+
+        
         <form method="POST" action="ServletAdmin">
             <br>
             <input type="text" name="elimUsuario" id="claveInicio" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left">
@@ -64,7 +68,7 @@
         
         
         
-        <table border="1" cellpadding="8" cellspacing="0" >
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;"><table style="background-color:#BADFF5;" border="1" cellpadding="8" cellspacing="0" >
   
         <tr><th align="center" colspan="5" >Pedidos</th>
         </tr>
@@ -126,6 +130,7 @@
 
         </table>
         
+        
         <br>
         
         <form method="POST" action="ServletAdmin">
@@ -141,7 +146,7 @@
         <h2> <font face="arial black">Catalogo Mazda</font></h2>
         
         <div style="overflow: scroll; height: 225px; width:45%; overflow:auto">
-        <table border="1" CELLSPACING="0" cellpadding="8">
+        <table style="background-color:#BADFF5;" border="1" CELLSPACING="0" cellpadding="8">
             
             <tr> <th>Producto</th>
             <th colspan="2" >Detalle</th>
@@ -226,6 +231,7 @@
             %>
         </table>
         </div>
+        </font>
         
         <br><br>
         <a href="inicioSesion.jsp">Cerrar Sesion</a>

@@ -4,7 +4,12 @@
     Author     : Asus
 --%>
 
+<%@page import="Modelo.Documento"%>
+<%@page import="Modelo.ConstructorDocumentacionPDF"%>
+<%@page import="Modelo.ConstructorDocumentacionVehiculo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.itextpdf.pdfa.*"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +17,15 @@
         <title>Documentacion</title>
     </head>
     <body>
-        <h1>Documentacion</h1>
+        
+        <%
+            ConstructorDocumentacionVehiculo cdv = new ConstructorDocumentacionPDF();
+            Documento doc = cdv.creaDocumento();
+            String formato = doc.getFormato();
+
+        %>
+        
+        <h3><%= formato %></h3>
+        
     </body>
 </html>

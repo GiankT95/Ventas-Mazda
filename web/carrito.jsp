@@ -19,11 +19,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Carrito de Compras</title>
     </head>
-    <body>
+    <body style="background-color:#34495E;">
         
     <center>
         
 
+        <img src="http://www.carlogos.org/logo/Mazda-logo-1997-1920x1080.png" width="300px" height="160px"/>
+        
         <%
     
         List<CarroCompras> carritos = (List<CarroCompras>) request.getSession().getAttribute("lista");
@@ -40,7 +42,7 @@
         
         <% double total = new Double(request.getSession().getAttribute("total").toString()); %>
         
-        <table align="center" border="1" cellpadding="8" cellspacing="0" > 
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;"><table style="background-color:#BADFF5;" align="center" border="1" cellpadding="8" cellspacing="0" > 
         
         <tr>
             <th colspan="5" align="center">CARRITO DE COMPRAS</th>
@@ -79,7 +81,6 @@
                 <%}%>
                 
             </tr>
-
                
             <%}%>
             
@@ -89,7 +90,7 @@
         </tr>
         
         </table>
-        
+        </font>
         <br>
         <form method="POST" action="ServletPedido">
  

@@ -20,6 +20,10 @@
         <servlet-name>ServletPedido</servlet-name>
         <servlet-class>Controlador.ServletPedido</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletDocumento</servlet-name>
+        <servlet-class>Controlador.ServletDocumento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ServletPedido</servlet-name>
         <url-pattern>/ServletPedido</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDocumento</servlet-name>
+        <url-pattern>/ServletDocumento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

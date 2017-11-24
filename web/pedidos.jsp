@@ -15,9 +15,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pedidos</title>
     </head>
-    <body>
-
-        <table border="1" cellpadding="8" cellspacing="0" >
+    <body style="background-color:#34495E;">
+    <center>
+        <img src="http://www.carlogos.org/logo/Mazda-logo-1997-1920x1080.png" width="300px" height="160px"/>
+        
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;"><table style="background-color:#BADFF5;" border="1" cellpadding="8" cellspacing="0" >
 
             <tr><th align="center" colspan="5" >Pedidos de <%= request.getSession().getAttribute("nombreUsuario")%></th>
             </tr>
@@ -27,8 +29,8 @@
                 <th>Pedido N°</th>
                 <th>Fecha</th>
                 <th>Medio de Pago</th>
+                <th>Documentacion</th>
                 <th>Monto</th>
-                <th>Documentación</th>
 
             </tr>
 
@@ -57,7 +59,14 @@
                 <td><%= i%></td>
                 <td><%= pedido.getFecha()%></td>
                 <td><%= pedido.getMedioPago()%></td>
-                <td><a href="documentos.jsp">Descargar</a></td>
+                <td>
+                    <form method="POST" action="ServletDocumento">
+            
+                        <input type="Submit" name="descargar" value="Decargar">
+                        <input type="hidden" name="documento" value="descargar"/>
+
+                    </form>
+                </td>
                 <td><%= d.format(pedido.getMonto())%></td>
 
             </tr>
@@ -74,6 +83,7 @@
             </tr>
 
         </table>
-
+            </font>
+    </center>
     </body>
 </html>

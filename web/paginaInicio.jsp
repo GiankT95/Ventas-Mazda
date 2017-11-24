@@ -22,14 +22,18 @@
         <title><%= request.getSession().getAttribute("nombreUsuario") %></title>
     </head>
 
-    <body>
+    <body style="background-color:#34495E;">
         
     <center>
-        <h1>Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </h1>
         
-        <h2> <font face="arial black">Catalogo Mazda</font></h2>
+        <img src="http://www.carlogos.org/logo/Mazda-logo-1997-1920x1080.png" width="300px" height="160px"/>
+        
+        <font face="Agency FB" color="#5499C7" style="font-size: 20pt;"><h1>Bienvenido <%= request.getSession().getAttribute("nombreUsuario") %> </h1>
+        
+        <h2> <font face="arial black">Catalogo Mazda</font></h2></font>
+        
         <div style="overflow: scroll; height: 225px; width:45%; overflow:auto">
-        <table border="1" CELLSPACING="0" cellpadding="8">
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;"><table style="background-color:#BADFF5;" border="1" CELLSPACING="0" cellpadding="8">
             
             <tr> <th>Producto</th>
             <th colspan="2" >Detalle</th>
@@ -113,6 +117,7 @@
             <%}
             %>
         </table>
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;">
         </div>
         
         <form method="POST" action="ServletCarrito">

@@ -23,6 +23,8 @@ public class Documento  implements java.io.Serializable {
        this.formato = formato;
     }
    
+    
+    
     public Integer getIdDocumento() {
         return this.idDocumento;
     }
@@ -51,9 +53,6 @@ public class Documento  implements java.io.Serializable {
     public void setFormato(String formato) {
         this.formato = formato;
     }
-
-
-
 
 }
 

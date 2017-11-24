@@ -11,18 +11,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Crear Usuario</title>
     </head>
-    <body>   
+    <body style="background-color:#34495E;">   
+    <center>
+        
+        <img src="http://www.carlogos.org/logo/Mazda-logo-1997-1920x1080.png" width="300px" height="160px"/>
+    
+        <font face="Agency FB" color="#5499C7" style="font-size: 14pt;">
+        
+        <h1>Crear Usuario</h1>
         
         <form method="POST" action="ServletRegistro">
             
-            <h1>Crear Usuario</h1>
-            Nombre de usuario: 
+            
+            <font face="Agency FB" color="#5499C7" style="font-size: 18pt;">Nombre de usuario</font> 
             <br><input type="Text" name="nombreUsuario" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left"><br><br>
-            Nombre:
+            <font face="Agency FB" color="#5499C7" style="font-size: 18pt;">Nombre</font>
             <br><input type="Text" name="nombre" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left"><br><br>
-            Apellido:
+            <font face="Agency FB" color="#5499C7" style="font-size: 18pt;">Apellido</font>
             <br><input type="Text" name="apellido" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left"><br><br>
-            Clave:
+            <font face="Agency FB" color="#5499C7" style="font-size: 18pt;">Clave</font>
             <br><input type="Password" name="clave" style="font-family: Arial; font-size: 12pt;width:210px;height:20px;text-align:left"><br><br>
             <input type="Submit" name="crear" value="Crear Usuario">
             
@@ -33,6 +40,7 @@
             <%= request.getSession().getAttribute("mensaje3") %>
             </h1>
         <% } %>
-        
+        </font>
+    </center>    
     </body>
 </html>
